@@ -16,18 +16,6 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-	Cube chasis;
-	chasis.size = { vec3(2.5f,2.5f,2.5f) };
-	App->physics->AddBody(chasis, 1.0f);
-
-	Cylinder front_R_wheel;
-	front_R_wheel.SetPos(3, 0, 0);
-	front_R_wheel.height = 0.5f;
-	front_R_wheel.radius = 0.7f;
-	front_R_wheel.SetRotation(90.0f, vec3(3,3,3));
-
-	App->physics->AddBody(front_R_wheel, 1.0f);
-
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));

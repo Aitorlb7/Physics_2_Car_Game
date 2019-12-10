@@ -25,7 +25,7 @@ void PhysVehicle3D::Render()
 {
 	Cylinder wheel;
 
-	wheel.color = Blue;
+	wheel.color.Set(0.57f,0.61f,0.66f);
 
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
@@ -40,16 +40,73 @@ void PhysVehicle3D::Render()
 
 	Cube chassis(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
+	Cube cabin(info.cabin_size.x, info.cabin_size.y, info.cabin_size.z); 
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&cabin.transform);
+	//----------------Axis for paddles--------------------------
+	Cube rPivot(info.rPivot_size.x, info.rPivot_size.y, info.rPivot_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&rPivot.transform);
+	Cube lPivot(info.lPivot_size.x, info.lPivot_size.y, info.lPivot_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&lPivot.transform);
+	//--------------------Paddles--------------------------
+	Cube rPaddle(info.rPaddle_size.x, info.rPaddle_size.y, info.rPaddle_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&rPaddle.transform);
+	Cube lPaddle(info.lPaddle_size.x, info.lPaddle_size.y, info.lPaddle_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&lPaddle.transform);
+
+
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
-	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
-	offset = offset.rotate(q.getAxis(), q.getAngle());
 
-	chassis.transform.M[12] += offset.getX();
-	chassis.transform.M[13] += offset.getY();
-	chassis.transform.M[14] += offset.getZ();
+	btVector3 offset_Chassis(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
+	offset_Chassis = offset_Chassis.rotate(q.getAxis(), q.getAngle());
+	btVector3 offset_Cabin(info.cabin_offset.x, info.cabin_offset.y, info.cabin_offset.z);
+	offset_Cabin = offset_Cabin.rotate(q.getAxis(), q.getAngle());
 
+	btVector3 offset_rPivot(info.rPivot_offset.x, info.rPivot_offset.y, info.rPivot_offset.z);
+	offset_rPivot = offset_rPivot.rotate(q.getAxis(), q.getAngle());
+	btVector3 offset_lPivot(info.lPivot_offset.x, info.lPivot_offset.y, info.lPivot_offset.z);
+	offset_lPivot = offset_lPivot.rotate(q.getAxis(), q.getAngle());
 
+	btVector3 offset_rPaddle(info.rPaddle_offset.x, info.rPaddle_offset.y, info.rPaddle_offset.z);
+	offset_rPaddle = offset_rPaddle.rotate(q.getAxis(), q.getAngle());
+	btVector3 offset_lPaddle(info.lPaddle_offset.x, info.lPaddle_offset.y, info.lPaddle_offset.z);
+	offset_lPaddle = offset_lPaddle.rotate(q.getAxis(), q.getAngle());
+
+	chassis.transform.M[12] += offset_Chassis.getX();
+	chassis.transform.M[13] += offset_Chassis.getY();
+	chassis.transform.M[14] += offset_Chassis.getZ();
+
+	cabin.transform.M[12] += offset_Cabin.getX();
+	cabin.transform.M[13] += offset_Cabin.getY();
+	cabin.transform.M[14] += offset_Cabin.getZ();
+
+	rPivot.transform.M[12] += offset_rPivot.getX();
+	rPivot.transform.M[13] += offset_rPivot.getY();
+	rPivot.transform.M[14] += offset_rPivot.getZ();
+
+	lPivot.transform.M[12] += offset_lPivot.getX();
+	lPivot.transform.M[13] += offset_lPivot.getY();
+	lPivot.transform.M[14] += offset_lPivot.getZ();
+
+	rPaddle.transform.M[12] += offset_rPaddle.getX();
+	rPaddle.transform.M[13] += offset_rPaddle.getY();
+	rPaddle.transform.M[14] += offset_rPaddle.getZ();
+
+	lPaddle.transform.M[12] += offset_lPaddle.getX();
+	lPaddle.transform.M[13] += offset_lPaddle.getY();
+	lPaddle.transform.M[14] += offset_lPaddle.getZ();
+
+	chassis.color.Set(0.355f, 0.315f, 0.110f);
+	cabin.color.Set(0.355f, 0.315f, 0.110f);
+	rPivot.color.Set(0.f, 0.f, 0.f);
+	lPivot.color.Set(0.f, 0.f, 0.f);
+	rPaddle.color.Set(0.f, 0.f, 0.f);
+	lPaddle.color.Set(0.f, 0.f, 0.f);
+	rPaddle.Render();
+	lPaddle.Render();
+	rPivot.Render();
+	lPivot.Render();
 	chassis.Render();
+	cabin.Render();
 }
 
 // ----------------------------------------------------------------------------

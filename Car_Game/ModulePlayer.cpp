@@ -21,8 +21,18 @@ bool ModulePlayer::Start()
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(2, 2, 4);
+	car.chassis_size.Set(2, 1.5f, 3.5f);
 	car.chassis_offset.Set(0, 1.5, 0);
+	car.cabin_size.Set(2, 2.5f, 1.5f);
+	car.cabin_offset.Set(0, 2.5f, 1);
+	car.rPivot_size.Set(0.3f, 4, 0.15f);
+	car.rPivot_offset.Set(-0.5f, 2.2f, 1.83f);
+	car.lPivot_size.Set(0.3f, 4, 0.15f);
+	car.lPivot_offset.Set(0.5f, 2.2f, 1.83f);
+	car.rPaddle_size.Set(0.3f, 0.15f, 1.8f);
+	car.rPaddle_offset.Set(-0.5f,0.25f,2.65f);
+	car.lPaddle_size.Set(0.3f, 0.15f, 1.8f);
+	car.lPaddle_offset.Set(0.5f, 0.25f, 2.65f);
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
@@ -32,7 +42,7 @@ bool ModulePlayer::Start()
 	car.maxSuspensionForce = 6000.0f;
 
 	// Wheel properties ---------------------------------------
-	float connection_height = 1.2f;
+	float connection_height = 1.6f;
 	float wheel_radius = 0.6f;
 	float wheel_width = 0.5f;
 	float suspensionRestLength = 1.2f;
@@ -97,7 +107,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 10);
+	vehicle->SetPos(0, 5, 2);
 	
 	return true;
 }
