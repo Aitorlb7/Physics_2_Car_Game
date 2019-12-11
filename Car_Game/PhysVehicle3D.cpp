@@ -1,6 +1,8 @@
 #include "PhysVehicle3D.h"
 #include "Primitive.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
+#include "ModulePhysics3D.h"
+#include "Application.h"
 
 // ----------------------------------------------------------------------------
 VehicleInfo::~VehicleInfo()
@@ -52,6 +54,9 @@ void PhysVehicle3D::Render()
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&rPaddle.transform);
 	Cube lPaddle(info.lPaddle_size.x, info.lPaddle_size.y, info.lPaddle_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&lPaddle.transform);
+
+	//-------------------Slider Constraint--------------------------
+	
 
 
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();

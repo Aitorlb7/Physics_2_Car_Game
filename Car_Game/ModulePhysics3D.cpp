@@ -360,6 +360,20 @@ void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, c
 	hinge->setDbgDrawSize(2.0f);
 }
 
+void ModulePhysics3D::AddConstraintSlider(PhysBody3D& bodyA, PhysBody3D& bodyB, const btTransform& frameInA, const btTransform& frameInB, bool useLinearReferenceFrameA)
+{
+	btSliderConstraint* slider = new btSliderConstraint(
+		*(bodyA.body),
+		*(bodyB.body),
+		frameInA,
+		frameInB,
+		useLinearReferenceFrameA);
+	
+	world->addConstraint(slider);
+	constraints.add(slider);
+	slider->setDbgDrawSize(2.0f);
+}
+
 // =============================================
 void DebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {
