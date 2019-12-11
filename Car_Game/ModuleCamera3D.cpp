@@ -50,6 +50,9 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if (free_camera == true)
 	{
+		vec3 newPos(0, 0, 0);
+		float speed = 10.0f * dt;
+
 		if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) free_camera = false;
 
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
@@ -71,8 +74,10 @@ update_status ModuleCamera3D::Update(float dt)
 	
 
 	// Mouse motion ----------------
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_DOWN) rotate_camera = true;
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_UP) rotate_camera = false;
 
-	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && rotate_camera == true)
 	{
 		int dx = -App->input->GetMouseXMotion();
 		int dy = -App->input->GetMouseYMotion();

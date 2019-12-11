@@ -39,7 +39,7 @@ struct Paddle
 	vec3 lPaddle_size;
 	vec3 lPaddle_offset;
 
-	btSliderConstraint* sliderConstraint;
+	/*btSliderConstraint* sliderConstraint;*/
 
 };
 
