@@ -124,8 +124,16 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
-	/*App->camera->Position = vehicle->info.chassis_offset + 10;
-	App->camera->LookAt(vehicle->GetPosition());*/
+	if (App->camera->free_camera == false)
+	{
+		App->camera->Position.x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() - 15 * vehicle->vehicle->getForwardVector().getX();
+		App->camera->Position.y = vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 10.5f * vehicle->vehicle->getUpAxis();
+		App->camera->Position.z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() - 12.5f * vehicle->vehicle->getForwardVector().getZ();
+		float x = vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() + 30 * vehicle->vehicle->getForwardVector().getX();
+		float z = vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 30 * vehicle->vehicle->getForwardVector().getZ();
+		App->camera->LookAt(vec3(x, 1, z));
+	}	
+
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		acceleration = MAX_ACCELERATION;
