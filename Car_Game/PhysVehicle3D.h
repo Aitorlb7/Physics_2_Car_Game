@@ -20,6 +20,29 @@ struct Wheel
 	bool steering; // does this wheel turns ?
 };
 
+struct Pivot
+{
+	PhysBody3D* pivot;
+	
+	vec3 rPivot_size;
+	vec3 rPivot_offset;
+	vec3 lPivot_size;
+	vec3 lPivot_offset;
+};
+
+struct Paddle
+{
+	PhysBody3D* paddle;
+	
+	vec3 rPaddle_size;
+	vec3 rPaddle_offset;
+	vec3 lPaddle_size;
+	vec3 lPaddle_offset;
+
+	btSliderConstraint* sliderConstraint;
+
+};
+
 struct VehicleInfo
 {
 	~VehicleInfo();
@@ -28,14 +51,6 @@ struct VehicleInfo
 	vec3 chassis_offset;
 	vec3 cabin_size;
 	vec3 cabin_offset;
-	vec3 rPivot_size;
-	vec3 rPivot_offset;
-	vec3 lPivot_size;
-	vec3 lPivot_offset;
-	vec3 rPaddle_size; 
-	vec3 rPaddle_offset;
-	vec3 lPaddle_size;
-	vec3 lPaddle_offset;
 
 	float mass;
 	float suspensionStiffness; // default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car
@@ -45,6 +60,8 @@ struct VehicleInfo
 	float frictionSlip; // defaults to 10.5 / friction with the ground. 0.8 should be good but high values feels better (kart 1000.0)
 	float maxSuspensionForce; // defaults to 6000 / max force to the chassis
 
+	Pivot pivot;
+	Paddle paddle;
 	Wheel* wheels;
 	int num_wheels;
 };
