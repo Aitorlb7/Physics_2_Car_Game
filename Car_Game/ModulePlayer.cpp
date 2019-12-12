@@ -7,6 +7,7 @@
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
+	enabled = true;
 	turn = acceleration = brake = 0.0f;
 }
 
@@ -33,6 +34,8 @@ bool ModulePlayer::Start()
 	car.paddle.rPaddle_offset.Set(-0.5f,0.25f,2.65f);
 	car.paddle.lPaddle_size.Set(0.3f, 0.15f, 1.8f);
 	car.paddle.lPaddle_offset.Set(0.5f, 0.25f, 2.65f);
+
+
 	car.mass = 500.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
@@ -107,7 +110,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 5, 2);
+	vehicle->SetPos(5, 5, 15);
 	
 	return true;
 }

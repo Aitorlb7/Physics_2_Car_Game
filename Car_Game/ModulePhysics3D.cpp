@@ -274,7 +274,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass)
 }
 
 // ---------------------------------------------------------
-PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
+PhysVehicle3D* ModulePhysics3D::AddVehicle( VehicleInfo& info)
 {
 	btCompoundShape* comShape = new btCompoundShape();
 	shapes.add(comShape);
@@ -323,11 +323,27 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
 
 		vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
 	}
-	// ---------------------
+	// ------------Slider Constraint-----------
+	Cube pivot(info.pivot.rPivot_size.x, info.pivot.rPivot_size.y, info.pivot.rPivot_size.z);
+	pivot.SetPos(info.pivot.rPivot_offset.x, info.pivot.rPivot_offset.y, info.pivot.rPivot_offset.z);
+	info.pivot.right_pivot = AddBody(pivot);
 
-	//Aqui hay que crear los dos bodies para luego hacer la constraint
+	Cube paddle(info.paddle.rPaddle_size.x, info.paddle.rPaddle_size.y, info.paddle.rPaddle_size.z);
+	paddle.SetPos(info.paddle.rPaddle_offset.x, info.paddle.rPaddle_offset.y, info.paddle.rPaddle_offset.z);
+	info.paddle.right_paddle = AddBody(paddle);
+	btTransform localA;
+	btTransform localB;
+	localA.setIdentity();
+	localB.setIdentity();
+	localA.getBasis().setEulerZYX(0, M_PI_2,0);
+	localA.setOrigin(btVector3(info.paddle.rPaddle_offset.x, info.pivot.rPivot_size.y - 2, info.pivot.rPivot_size.z));
+	localB.getBasis().setEulerZYX(0, M_PI_2, 0);
+	localB.setOrigin(btVector3(info.paddle.rPaddle_offset.x, info.pivot.rPivot_size.y + 2, info.pivot.rPivot_size.z));
 
-
+	info.paddle.sliderConstraint = new btSliderConstraint
+	(*info.pivot.right_pivot->body,*info.paddle.right_paddle->body,localA,localB,true);
+	world->addConstraint(info.paddle.sliderConstraint, true);
+	constraints.add(info.paddle.sliderConstraint);
 
 
 

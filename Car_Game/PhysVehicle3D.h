@@ -3,6 +3,9 @@
 #include "PhysBody3D.h"
 #include "glmath.h"
 
+#include "Bullet/include/btBulletDynamicsCommon.h"
+#include "ModulePhysics3D.h"
+
 class btRaycastVehicle;
 struct PhysBody3D;
 
@@ -22,8 +25,9 @@ struct Wheel
 
 struct Pivot
 {
-	PhysBody3D* pivot;
-	
+	PhysBody3D* right_pivot = nullptr;
+	PhysBody3D* left_pivot = nullptr;
+
 	vec3 rPivot_size;
 	vec3 rPivot_offset;
 	vec3 lPivot_size;
@@ -32,14 +36,15 @@ struct Pivot
 
 struct Paddle
 {
-	PhysBody3D* paddle;
-	
+	PhysBody3D* right_paddle = nullptr;
+	PhysBody3D* left_paddle = nullptr;
+
 	vec3 rPaddle_size;
 	vec3 rPaddle_offset;
 	vec3 lPaddle_size;
 	vec3 lPaddle_offset;
 
-	/*btSliderConstraint* sliderConstraint;*/
+	btSliderConstraint* sliderConstraint = nullptr;
 
 };
 

@@ -55,7 +55,6 @@ void PhysVehicle3D::Render()
 	Cube lPaddle(info.paddle.lPaddle_size.x, info.paddle.lPaddle_size.y, info.paddle.lPaddle_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&lPaddle.transform);
 
-	//-------------------Slider Constraint--------------------------
 	
 
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
@@ -98,6 +97,10 @@ void PhysVehicle3D::Render()
 	lPaddle.transform.M[12] += offset_lPaddle.getX();
 	lPaddle.transform.M[13] += offset_lPaddle.getY();
 	lPaddle.transform.M[14] += offset_lPaddle.getZ();
+
+
+
+
 
 	chassis.color.Set(0.355f, 0.315f, 0.110f);
 	cabin.color.Set(0.355f, 0.315f, 0.110f);
