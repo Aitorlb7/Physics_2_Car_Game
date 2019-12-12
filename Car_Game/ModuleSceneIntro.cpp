@@ -41,8 +41,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	
 
-
-	for (int i = 0; i < 9; i++)
+	//Render:
+	for (int i = 0; i < 4; i++)
 	{
 		walls[i]->Render();
 	}
@@ -59,19 +59,25 @@ void ModuleSceneIntro::Create_walls()
 {
 	float mass = 999999;
 	
-	for (int i = 0; i < 9; i++)
+	//Creating walls
+	for (int i = 0; i < 4; i++)
 	{
-		walls[i] = new Cube(50, 2, 2);
-		App->physics->AddBody(*walls[i], mass);
-		walls[i]->SetPos(0, 1, -10);
+		walls[i] = new Cube(70, 6, 2);
 		walls[i]->color = Blue;
 	}
 
+	//Position of walls
 	walls[1]->SetRotation(90, vec3(0, 1, 0));
 	walls[2]->SetRotation(90, vec3(0, 1, 0));
-	walls[1]->SetPos(27, 1, -10);
-	
+	walls[0]->SetPos(0, 3, -20);
+	walls[1]->SetPos(36, 3, 15);
+	walls[2]->SetPos(-36, 3, 15);
+	walls[3]->SetPos(0, 3, 50);
 
-
+	//Give physics to walls
+	for (int i = 0; i < 4; i++)
+	{
+		App->physics->AddBody(*walls[i], mass);	
+	}
 }
 
