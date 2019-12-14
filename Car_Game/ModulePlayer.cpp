@@ -167,7 +167,10 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
+	{
+		vehicle->Elevate_paddle(2.0f);
+	}
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);

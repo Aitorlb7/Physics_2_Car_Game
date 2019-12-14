@@ -104,10 +104,10 @@ void PhysVehicle3D::Render()
 
 	chassis.color.Set(0.355f, 0.315f, 0.110f);
 	cabin.color.Set(0.355f, 0.315f, 0.110f);
-	rPivot.color.Set(0.f, 0.f, 0.f);
-	lPivot.color.Set(0.f, 0.f, 0.f);
-	rPaddle.color.Set(0.f, 0.f, 0.f);
-	lPaddle.color.Set(0.f, 0.f, 0.f);
+	rPivot.color.Set(0.10f, 0.10f, 0.11f);
+	lPivot.color.Set(0.10f, 0.10f, 0.11f);
+	rPaddle.color.Set(0.10f, 0.10f, 0.11f);
+	lPaddle.color.Set(0.10f, 0.10f, 0.11f);
 
 
 	rPaddle.Render();
@@ -158,4 +158,13 @@ void PhysVehicle3D::Turn(float degrees)
 float PhysVehicle3D::GetKmh() const
 {
 	return vehicle->getCurrentSpeedKmHour();
+}
+
+// ----------------------------------------------------------------------------
+
+void PhysVehicle3D::Elevate_paddle(float velocity)
+{
+	info.paddle.sliderConstraint->setPoweredLinMotor(true);
+	info.paddle.sliderConstraint->setMaxLinMotorForce(10000);
+	info.paddle.sliderConstraint->setTargetLinMotorVelocity(velocity);
 }

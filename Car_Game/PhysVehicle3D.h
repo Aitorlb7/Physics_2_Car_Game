@@ -83,6 +83,7 @@ public:
 	void Brake(float force);
 	void Turn(float degrees);
 	float GetKmh() const;
+	void Elevate_paddle(float velocity);
 public:
 
 	VehicleInfo info;
