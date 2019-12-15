@@ -111,6 +111,7 @@ void ModuleSceneIntro::Create_Door()
 	rightGate->color = Red;
 
 	rightGate_body = App->physics->AddBody(*rightGate, 10.f);
+	rightGate_body->body->setActivationState(DISABLE_DEACTIVATION);
 	const btVector3 btPivotA(-11.0f, 15.f, 0.f);
 	const btVector3 btAxisA(0.0f, 1.0f, 0.0f);
 	right_hinge = new btHingeConstraint(*rightGate_body->body, btPivotA, btAxisA);
@@ -128,6 +129,7 @@ void ModuleSceneIntro::Create_Door()
 	leftGate->color = Red;
 
 	leftGate_body = App->physics->AddBody(*leftGate, 10.f);
+	leftGate_body->body->setActivationState(DISABLE_DEACTIVATION);
 	const btVector3 btPivotB(11.0f, 15.f, 0.f);
 	const btVector3 btAxisB(0.0f, 1.0f, 0.0f);
 	left_hinge = new btHingeConstraint(*leftGate_body->body, btPivotB, btAxisB);
