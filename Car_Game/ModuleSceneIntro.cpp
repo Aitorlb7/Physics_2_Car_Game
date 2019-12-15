@@ -25,6 +25,7 @@ bool ModuleSceneIntro::Start()
 
 	Create_walls();
 	Create_Door();
+	Create_Obstacles();
 	return ret;
 }
 
@@ -56,7 +57,12 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (int i = 0; i < 8; i++)
 	{
 		walls[i]->Render();
+		if (i < 6)
+		{
+			obstacle[i]->Render();
+		}
 	}
+
 	p.Render();
 	rightGate->Render();
 	leftGate->Render();
@@ -128,10 +134,6 @@ void ModuleSceneIntro::Create_Door()
 	App->physics->world->addConstraint(right_hinge);
 	right_hinge->setDbgDrawSize(btScalar(2.f));
 
-
-
-
-
 	//---------------Left Gate-----------------
 	leftGate = new Cube(14.f, 30.f, 2.f);
 	leftGate->SetPos(7.0f, 15.f, 180.0f);
@@ -145,5 +147,25 @@ void ModuleSceneIntro::Create_Door()
 	left_hinge->setLimit(-SIMD_PI * 0.35f, SIMD_PI * 0.35f);
 	App->physics->world->addConstraint(left_hinge); 
 	left_hinge->setDbgDrawSize(btScalar(2.f));
+}
+
+void ModuleSceneIntro::Create_Obstacles()
+{
+	//Create obstacles
+	for (int i = 0; i < 6; i++)
+	{
+		obstacle[i] = new Cube(5,4,5);
+		obstacle[i]->color = Red;
+	}
+
+	//Position
+
+	obstacle[0]->SetPos(-20, 2, 40);
+	obstacle[1]->SetPos(5, 2, 45);
+	obstacle[2]->SetPos(25, 2, 50);
+	obstacle[3]->SetPos(-20, 2, 70);
+	obstacle[4]->SetPos(5, 2, 75);
+	obstacle[5]->SetPos(25, 2, 80);
+
 }
 

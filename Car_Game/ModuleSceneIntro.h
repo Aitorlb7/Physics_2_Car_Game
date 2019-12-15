@@ -24,6 +24,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void Create_walls();
 	void Create_Door();
+	void Create_Obstacles();
 
 public:
 	/*
@@ -46,8 +47,9 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-	Cube* walls[8];
+	Cube* obstacle[6];
 
+	Cube* walls[8];
 	Cube* Floor;
 
 	Cube* rightGate;
