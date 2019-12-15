@@ -19,10 +19,15 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	void PowerUpSystem();
+
 public:
 
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
+
+	bool can_sprint = true;
+	Timer sprint_time;
 };

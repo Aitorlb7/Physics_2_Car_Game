@@ -126,6 +126,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+	PowerUpSystem();
 	turn = acceleration = brake = 0.0f;
 
 	if (App->camera->free_camera == false)
@@ -172,6 +173,15 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->Elevate_paddle(2.0f);
 	}
 
+	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN))
+	{
+		if (can_sprint == true)
+		{
+			sprint_time.Start();
+		}
+	}
+
+
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -183,6 +193,23 @@ update_status ModulePlayer::Update(float dt)
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::PowerUpSystem()
+{
+	if (can_sprint == true)
+	{
+		//SPRINT:
+		if (sprint_time.Read() < 1.0f)
+		{
+			acceleration = MAX_ACCELERATION * 10;
+		}
+		else
+		{
+			sprint_time.Stop();
+			can_sprint = false;
+		}
+	}
 }
 
 
