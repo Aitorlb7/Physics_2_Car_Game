@@ -3,6 +3,9 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "ModulePhysics3D.h"
+
+#include "Bullet/include/btBulletCollisionCommon.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -38,8 +41,9 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
 	p.axis = true;
-
-	
+	Cube floor(1000, 0.05, 1000);
+	floor.color.Set(0.635f, 0.635f, 0.635f);
+	floor.Render();
 
 	//Render:
 	for (int i = 0; i < 5; i++)
@@ -47,12 +51,11 @@ update_status ModuleSceneIntro::Update(float dt)
 		walls[i]->Render();
 	}
 	
-	Auxbody->GetTransform(&right_gate->transform);
-	Auxbody2->GetTransform(&right_joint->transform);
+	rightGate_body->GetTransform(&rightGate->transform);
+	leftGate_body->GetTransform(&leftGate->transform);
 	p.Render();
-	right_joint->Render();
-	left_joint->Render();
-	right_gate->Render();
+	rightGate->Render();
+	leftGate->Render();
 	return UPDATE_CONTINUE;
 }
 
@@ -86,25 +89,31 @@ void ModuleSceneIntro::Create_walls()
 }
 void ModuleSceneIntro::Create_Door()
 {
-	right_joint = new Cylinder(2, 30);
-	right_joint->color = Red;
-	right_joint->SetPos(-10, 15, 50);
-	right_joint->SetRotation(90, vec3(0, 0, 1));
+	//---------------Right Gate-----------------
+	rightGate = new Cube(14.f, 30.f, 2.f);
+	rightGate->SetPos(-7.0f, 15.f, 50.f);
+	rightGate->color = Red;
 
-	left_joint = new Cylinder(2, 30);
-	left_joint->color = Blue;
-	left_joint->SetPos(13, 15, 50);
-	left_joint->SetRotation(90, vec3(0, 0, 1));
-	//App->physics->AddBody(*left_joint, MASS);
+	rightGate_body = App->physics->AddBody(*rightGate, 10.f);
+	const btVector3 btPivotA(-11.0f, 15.f, 0.f);
+	const btVector3 btAxisA(0.0f, 1.0f, 0.0f);
+	btHingeConstraint* right_hinge = new btHingeConstraint(*rightGate_body->body, btPivotA, btAxisA);
+	right_hinge->setLimit(-SIMD_PI * 0.35f, SIMD_PI * 0.35f);
+	App->physics->world->addConstraint(right_hinge);
+	right_hinge->setDbgDrawSize(btScalar(5.f));
 
-	right_gate = new Cube(5, 30, 2);
-	right_gate->SetPos(0, 15, 50);
-	right_gate->color = Red;
-	//App->physics->AddBody(*right_gate, MASS);
 
-	Auxbody = App->physics->AddBody(*right_gate, 1.0f);
-	Auxbody2 = App->physics->AddBody(*right_joint, 1.0f);
-	btHingeConstraint* right_hinge = App->physics->AddConstraintHinge(*Auxbody, *Auxbody2, vec3{ 0,0,0 }, vec3{ 0, 0,0 }, vec3{ 1,0,0 }, vec3{ 0,0,1 }, true);
+	//---------------Left Gate-----------------
+	leftGate = new Cube(14.f, 30.f, 2.f);
+	leftGate->SetPos(7.0f, 15.f, 50.f);
+	leftGate->color = Red;
 
+	leftGate_body = App->physics->AddBody(*leftGate, 10.f);
+	const btVector3 btPivotB(11.0f, 15.f, 0.f);
+	const btVector3 btAxisB(0.0f, 1.0f, 0.0f);
+	btHingeConstraint* left_hinge = new btHingeConstraint(*leftGate_body->body, btPivotB, btAxisB);
+	left_hinge->setLimit(-SIMD_PI * 0.35f, SIMD_PI * 0.35f);
+	App->physics->world->addConstraint(left_hinge);
+	left_hinge->setDbgDrawSize(btScalar(5.f));
 }
 

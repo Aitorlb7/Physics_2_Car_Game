@@ -47,12 +47,9 @@ public:
 
 	Cube* walls[5];
 
-	Cylinder* right_joint;
-	Cylinder* left_joint;
-	Cube* right_gate;
-	Cube* left_gate;
+	Cube* rightGate;
+	Cube* leftGate;
 
-	PhysBody3D* Auxbody;
-	PhysBody3D* Auxbody2;
-
+	PhysBody3D* rightGate_body;
+	PhysBody3D* leftGate_body;
 };
