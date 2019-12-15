@@ -53,7 +53,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 
 	//Render:
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		walls[i]->Render();
 	}
@@ -75,16 +75,21 @@ void ModuleSceneIntro::Create_walls()
 	Floor->color.Set(0.635f, 0.635f, 0.635f);;
 
 	//Creating walls
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 8; i++)
 	{		
 		if ((i == 3) || (i == 4))
 		{
 			walls[i] = new Cube(35, 30, 2);
 		}
-		else
+		if(i < 3)
 		{
-			walls[i] = new Cube(100, 30, 2);
+			walls[i] = new Cube(200, 30, 2);
 		}
+		if (i >= 5)
+		{
+			walls[i] = new Cube(70, 30, 2);
+		}
+		
 		walls[i]->color = Blue;
 	}
 
@@ -92,13 +97,17 @@ void ModuleSceneIntro::Create_walls()
 	walls[1]->SetRotation(90, vec3(0, 1, 0));
 	walls[2]->SetRotation(90, vec3(0, 1, 0));
 	walls[0]->SetPos(0, 15, -20);
-	walls[1]->SetPos(50, 15, 30);
-	walls[2]->SetPos(-50, 15, 30);
-	walls[3]->SetPos(32, 15, 80);
-	walls[4]->SetPos(-32, 15, 80);
+	walls[1]->SetPos(50, 15, 80);
+	walls[2]->SetPos(-50, 15, 80);
+	walls[3]->SetPos(32, 15, 180);
+	walls[4]->SetPos(-32, 15, 180);
+	walls[5]->SetPos(15, 15, 30);
+	walls[6]->SetPos(-15, 15, 60);
+	walls[7]->SetPos(15, 15, 90);
+
 
 	//Give physics to walls
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		App->physics->AddBody(*walls[i], MASS);
 	}
@@ -107,7 +116,7 @@ void ModuleSceneIntro::Create_Door()
 {
 	//---------------Right Gate-----------------
 	rightGate = new Cube(14.f, 30.f, 2.f);
-	rightGate->SetPos(-7.0f, 15.f, 80.0f);
+	rightGate->SetPos(-7.0f, 15.f, 180.0f);
 	rightGate->color = Red;
 
 	rightGate_body = App->physics->AddBody(*rightGate, 10.f);
@@ -125,7 +134,7 @@ void ModuleSceneIntro::Create_Door()
 
 	//---------------Left Gate-----------------
 	leftGate = new Cube(14.f, 30.f, 2.f);
-	leftGate->SetPos(7.0f, 15.f, 80.0f);
+	leftGate->SetPos(7.0f, 15.f, 180.0f);
 	leftGate->color = Red;
 
 	leftGate_body = App->physics->AddBody(*leftGate, 10.f);
@@ -134,7 +143,7 @@ void ModuleSceneIntro::Create_Door()
 	const btVector3 btAxisB(0.0f, 1.0f, 0.0f);
 	left_hinge = new btHingeConstraint(*leftGate_body->body, btPivotB, btAxisB);
 	left_hinge->setLimit(-SIMD_PI * 0.35f, SIMD_PI * 0.35f);
-	App->physics->world->addConstraint(left_hinge);
+	App->physics->world->addConstraint(left_hinge); 
 	left_hinge->setDbgDrawSize(btScalar(2.f));
 }
 

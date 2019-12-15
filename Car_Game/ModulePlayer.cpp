@@ -129,7 +129,6 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	PowerUpSystem();
 	turn = acceleration = brake = 0.0f;
 
 	if (App->camera->free_camera == false)
@@ -176,18 +175,21 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->Elevate_paddle(-2.0f);
 	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN))
+	if (can_sprint == true)
 	{
-		if (can_sprint == true)
+		if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN))
 		{
-			sprint_time.Start();
+			sprinting = true;
+			sprint_timer.Start();
 		}
 	}
+
 // Doesn't work------------------
 	vehicle->info.paddle.right_paddle->GetTransform(&vehicle->info.rPaddle->transform);
 	vehicle->info.pivot.right_pivot->GetTransform(&vehicle->info.rPivot->transform);
 //--------------------------------
 
+	PowerUpSystem();
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -203,19 +205,23 @@ update_status ModulePlayer::Update(float dt)
 
 void ModulePlayer::PowerUpSystem()
 {
-	if (can_sprint == true)
-	{
+
 		//SPRINT:
-		if (sprint_time.Read() < 1.0f)
+	if (sprinting == true)
+	{
+		if (sprint_timer.ReadSec() < 1.0f)
 		{
-			acceleration = MAX_ACCELERATION * 10;
+			acceleration += 9999;
 		}
 		else
 		{
-			sprint_time.Stop();
-			can_sprint = false;
+			sprint_timer.Reset();
+			sprinting = false;
+		/*	can_sprint = false;*/
 		}
 	}
+
+
 }
 
 

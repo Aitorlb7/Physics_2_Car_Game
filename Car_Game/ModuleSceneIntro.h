@@ -46,7 +46,7 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-	Cube* walls[5];
+	Cube* walls[8];
 
 	Cube* Floor;
 
