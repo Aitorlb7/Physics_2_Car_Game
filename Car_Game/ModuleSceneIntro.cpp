@@ -23,6 +23,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	Create_Sensors();
 	Create_walls();
 	Create_Door();
 	Create_Obstacles();
@@ -64,6 +65,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 	p.Render();
+	sensor_end->Render();
 	rightGate->Render();
 	leftGate->Render();
 	Floor->Render();
@@ -72,6 +74,10 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	if (body1->type == End) {
+		right_hinge->enableAngularMotor(true, -1.0f, 100.0f);
+		left_hinge->enableAngularMotor(true, 1.0f, 100.0f);
+	}
 }
 
 void ModuleSceneIntro::Create_walls()
@@ -167,5 +173,16 @@ void ModuleSceneIntro::Create_Obstacles()
 	obstacle[4]->SetPos(5, 2, 75);
 	obstacle[5]->SetPos(25, 2, 80);
 
+}
+
+void ModuleSceneIntro::Create_Sensors()
+{
+	// End sensor------------------
+	sensor_end = new Cube(40.f, 0.1f, 5.f);
+	sensor_end->SetPos(0,0, 170.f);
+	sensor_end->color = Red;
+	PhysBody3D* auxbody = App->physics->AddBody(*sensor_end, 0,End);
+	auxbody->CreateSensor();
+	auxbody->collision_listeners.add(this);
 }
 

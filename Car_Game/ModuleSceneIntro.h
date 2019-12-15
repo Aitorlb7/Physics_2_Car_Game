@@ -25,7 +25,7 @@ public:
 	void Create_walls();
 	void Create_Door();
 	void Create_Obstacles();
-
+	void Create_Sensors();
 public:
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
@@ -51,6 +51,7 @@ public:
 
 	Cube* walls[8];
 	Cube* Floor;
+	Cube* sensor_end;
 
 	Cube* rightGate;
 	Cube* leftGate;

@@ -170,10 +170,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
-	{
-		vehicle->Elevate_paddle(-2.0f);
-	}
+
 
 	if (can_sprint == true)
 	{
@@ -184,6 +181,11 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 
+//To show the slider constraint works but it's not implemented in the car
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
+	{
+		vehicle->Elevate_paddle(-2.0f);
+	}
 // Doesn't work------------------
 	vehicle->info.paddle.right_paddle->GetTransform(&vehicle->info.rPaddle->transform);
 	vehicle->info.pivot.right_pivot->GetTransform(&vehicle->info.rPivot->transform);

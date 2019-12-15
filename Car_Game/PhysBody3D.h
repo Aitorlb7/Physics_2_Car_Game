@@ -6,6 +6,13 @@
 class btRigidBody;
 class Module;
 
+enum SensorType
+{
+	None = 0,
+	End,
+	Obstacle,
+};
+
 // =================================================
 struct PhysBody3D
 {
@@ -19,12 +26,15 @@ public:
 	void SetTransform(const float* matrix) const;
 	void SetPos(float x, float y, float z);
 
+	void CreateSensor();
+
 private:
 	
 
 public:
 	btRigidBody* body = nullptr;
 	p2List<Module*> collision_listeners;
+	SensorType type = None;
 };
 
 #endif // __PhysBody3D_H__
