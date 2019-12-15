@@ -3,6 +3,7 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 #include "Primitive.h"
+#include "ModulePhysics3D.h"
 
 #define MAX_SNAKE 2
 #define MASS 10000
@@ -54,4 +55,7 @@ public:
 
 	PhysBody3D* rightGate_body;
 	PhysBody3D* leftGate_body;
+
+	btHingeConstraint* right_hinge;
+	btHingeConstraint* left_hinge;
 };

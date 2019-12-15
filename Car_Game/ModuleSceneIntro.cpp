@@ -40,19 +40,23 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
-	p.axis = true;
-	Cube floor(1000, 0.05, 1000);
-	floor.color.Set(0.635f, 0.635f, 0.635f);
-	floor.Render();
+	p.axis = true;	
+	rightGate_body->GetTransform(&rightGate->transform);
+	leftGate_body->GetTransform(&leftGate->transform);
+
+
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT)
+	{
+		right_hinge->enableAngularMotor(true, -1.0f, 100.0f);
+		left_hinge->enableAngularMotor(true, 1.0f, 100.0f);
+	}
+
 
 	//Render:
 	for (int i = 0; i < 5; i++)
 	{
 		walls[i]->Render();
 	}
-	
-	rightGate_body->GetTransform(&rightGate->transform);
-	leftGate_body->GetTransform(&leftGate->transform);
 	p.Render();
 	rightGate->Render();
 	leftGate->Render();
@@ -68,7 +72,7 @@ void ModuleSceneIntro::Create_walls()
 {
 	// Create floor
 	Floor = new Cube(500, 0.1f, 500);
-	Floor->color = Blue;
+	Floor->color.Set(0.635f, 0.635f, 0.635f);;
 
 	//Creating walls
 	for (int i = 0; i < 5; i++)
@@ -109,10 +113,13 @@ void ModuleSceneIntro::Create_Door()
 	rightGate_body = App->physics->AddBody(*rightGate, 10.f);
 	const btVector3 btPivotA(-11.0f, 15.f, 0.f);
 	const btVector3 btAxisA(0.0f, 1.0f, 0.0f);
-	btHingeConstraint* right_hinge = new btHingeConstraint(*rightGate_body->body, btPivotA, btAxisA);
+	right_hinge = new btHingeConstraint(*rightGate_body->body, btPivotA, btAxisA);
 	right_hinge->setLimit(-SIMD_PI * 0.35f, SIMD_PI * 0.35f);
 	App->physics->world->addConstraint(right_hinge);
-	right_hinge->setDbgDrawSize(btScalar(5.f));
+	right_hinge->setDbgDrawSize(btScalar(2.f));
+
+
+
 
 
 	//---------------Left Gate-----------------
@@ -123,9 +130,9 @@ void ModuleSceneIntro::Create_Door()
 	leftGate_body = App->physics->AddBody(*leftGate, 10.f);
 	const btVector3 btPivotB(11.0f, 15.f, 0.f);
 	const btVector3 btAxisB(0.0f, 1.0f, 0.0f);
-	btHingeConstraint* left_hinge = new btHingeConstraint(*leftGate_body->body, btPivotB, btAxisB);
+	left_hinge = new btHingeConstraint(*leftGate_body->body, btPivotB, btAxisB);
 	left_hinge->setLimit(-SIMD_PI * 0.35f, SIMD_PI * 0.35f);
 	App->physics->world->addConstraint(left_hinge);
-	left_hinge->setDbgDrawSize(btScalar(5.f));
+	left_hinge->setDbgDrawSize(btScalar(2.f));
 }
 
