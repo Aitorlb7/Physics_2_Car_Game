@@ -28,6 +28,7 @@ public:
 	float acceleration;
 	float brake;
 
+	bool sprinting = false;
 	bool can_sprint = true;
-	Timer sprint_time;
+	Timer sprint_timer;
 };
