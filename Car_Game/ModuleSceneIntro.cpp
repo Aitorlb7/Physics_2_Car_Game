@@ -65,7 +65,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 	p.Render();
-	sensor_end->Render();
+	Aux->Render();
 	rightGate->Render();
 	leftGate->Render();
 	Floor->Render();
@@ -178,10 +178,14 @@ void ModuleSceneIntro::Create_Obstacles()
 void ModuleSceneIntro::Create_Sensors()
 {
 	// End sensor------------------
-	sensor_end = new Cube(40.f, 0.1f, 5.f);
-	sensor_end->SetPos(0,0, 170.f);
-	sensor_end->color = Red;
-	PhysBody3D* auxbody = App->physics->AddBody(*sensor_end, 0,End);
+	Aux = new Cube(40.f, 0.1f, 5.f);
+	Aux->SetPos(0, 0.1f, 170.f);
+	Aux->color = Red;
+	
+	
+	Cube sensor_end = *Aux;
+	sensor_end.SetPos(0,1.6f, 170.f);
+	PhysBody3D* auxbody = App->physics->AddBody(sensor_end, 0,End);
 	auxbody->CreateSensor();
 	auxbody->collision_listeners.add(this);
 }
