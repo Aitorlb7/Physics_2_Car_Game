@@ -65,7 +65,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	}
 
 	p.Render();
-	Aux->Render();
+	//Aux->Render();
 	rightGate->Render();
 	leftGate->Render();
 	Floor->Render();
