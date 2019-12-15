@@ -5,6 +5,7 @@
 #include "Primitive.h"
 
 #define MAX_SNAKE 2
+#define MASS 10000
 
 struct PhysBody3D;
 struct PhysMotor3D;
@@ -21,6 +22,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void Create_walls();
+	void Create_Door();
 
 public:
 	/*
@@ -44,4 +46,13 @@ public:
 	PhysMotor3D* right_wheel;
 
 	Cube* walls[5];
+
+	Cylinder* right_joint;
+	Cylinder* left_joint;
+	Cube* right_gate;
+	Cube* left_gate;
+
+	PhysBody3D* Auxbody;
+	PhysBody3D* Auxbody2;
+
 };
