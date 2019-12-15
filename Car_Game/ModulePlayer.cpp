@@ -4,6 +4,8 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
+#include "ModulePhysics3D.h"
+
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
@@ -20,6 +22,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	VehicleInfo car;
+
 
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(2, 1.5f, 3.5f);
@@ -110,7 +113,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(5, 2, 0);
+	vehicle->SetPos(0, 0, 0);
 	
 	return true;
 }
@@ -170,7 +173,7 @@ update_status ModulePlayer::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 	{
-		vehicle->Elevate_paddle(2.0f);
+		vehicle->Elevate_paddle(-2.0f);
 	}
 
 	if ((App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN))
@@ -180,7 +183,10 @@ update_status ModulePlayer::Update(float dt)
 			sprint_time.Start();
 		}
 	}
-
+// Doesn't work------------------
+	vehicle->info.paddle.right_paddle->GetTransform(&vehicle->info.rPaddle->transform);
+	vehicle->info.pivot.right_pivot->GetTransform(&vehicle->info.rPivot->transform);
+//--------------------------------
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);

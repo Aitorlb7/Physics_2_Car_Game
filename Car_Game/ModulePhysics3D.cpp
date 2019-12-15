@@ -323,29 +323,37 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle( VehicleInfo& info)
 
 		vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
 	}
-	// ------------Slider Constraint-----------
+	// ------------Slider Constraint--------------> Finally it doesn't attach to the car so we left it outside the circuit.
+
+
 	Cube pivot(info.pivot.rPivot_size.x, info.pivot.rPivot_size.y, info.pivot.rPivot_size.z);
-	pivot.SetPos(info.pivot.rPivot_offset.x, info.pivot.rPivot_offset.y, info.pivot.rPivot_offset.z);
-	info.pivot.right_pivot = AddBody(pivot);
+	//pivot.SetPos(info.chassis_offset.x + info.pivot.rPivot_offset.x, info.chassis_offset.y + info.pivot.rPivot_offset.y, info.chassis_offset.z + info.pivot.rPivot_offset.z);
+	pivot.SetPos(70, 0, 0);
+	info.pivot.right_pivot = AddBody(pivot,MASS);
 
 	Cube paddle(info.paddle.rPaddle_size.x, info.paddle.rPaddle_size.y, info.paddle.rPaddle_size.z);
-	paddle.SetPos(info.paddle.rPaddle_offset.x, info.paddle.rPaddle_offset.y, info.paddle.rPaddle_offset.z);
-	info.paddle.right_paddle = AddBody(paddle);
+	//paddle.SetPos(info.chassis_offset.x + info.paddle.rPaddle_offset.x, info.chassis_offset.y + info.paddle.rPaddle_offset.y, info.chassis_offset.z + info.paddle.rPaddle_offset.z);
+	paddle.SetPos(70, 0, 4);
+	info.paddle.right_paddle = AddBody(paddle,10.0f);
+	info.paddle.right_paddle->body->setActivationState(DISABLE_DEACTIVATION);
+
+
 	btTransform localA;
 	btTransform localB;
 	localA.setIdentity();
 	localB.setIdentity();
-	localA.getBasis().setEulerZYX(0, M_PI_2,0);
-	localA.setOrigin(btVector3(info.paddle.rPaddle_offset.x, info.pivot.rPivot_size.y - 2, info.pivot.rPivot_size.z));
-	localB.getBasis().setEulerZYX(0, M_PI_2, 0);
-	localB.setOrigin(btVector3(info.paddle.rPaddle_offset.x, info.pivot.rPivot_size.y + 2, info.pivot.rPivot_size.z));
+	localA.getBasis().setEulerZYX(0, 0, M_PI_2);
+	localA.setOrigin(btVector3(0, 0, -1.5f));
+	localB.getBasis().setEulerZYX(0, 0, M_PI_2);
+	//localB.setOrigin(btVector3(0,0,0));
 
 	info.paddle.sliderConstraint = new btSliderConstraint
-	(*info.pivot.right_pivot->body,*info.paddle.right_paddle->body,localA,localB,true);
+	(*info.paddle.right_paddle->body, *info.pivot.right_pivot->body,localA,localB,true);
 	world->addConstraint(info.paddle.sliderConstraint, true);
 	constraints.add(info.paddle.sliderConstraint);
+	info.paddle.sliderConstraint->setDbgDrawSize(2.0f);
 
-
+	
 
 	PhysVehicle3D* pvehicle = new PhysVehicle3D(body, vehicle, info);
 	world->addVehicle(vehicle);

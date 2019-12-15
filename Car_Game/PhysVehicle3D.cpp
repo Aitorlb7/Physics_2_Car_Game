@@ -45,13 +45,13 @@ void PhysVehicle3D::Render()
 	Cube cabin(info.cabin_size.x, info.cabin_size.y, info.cabin_size.z); 
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&cabin.transform);
 	//----------------Axis for paddles--------------------------
-	Cube rPivot(info.pivot.rPivot_size.x, info.pivot.rPivot_size.y, info.pivot.rPivot_size.z);
-	vehicle->getChassisWorldTransform().getOpenGLMatrix(&rPivot.transform);
+	info.rPivot = new Cube(info.pivot.rPivot_size.x, info.pivot.rPivot_size.y, info.pivot.rPivot_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&info.rPivot->transform);
 	Cube lPivot(info.pivot.lPivot_size.x, info.pivot.lPivot_size.y, info.pivot.lPivot_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&lPivot.transform);
 	//--------------------Paddles--------------------------
-	Cube rPaddle(info.paddle.rPaddle_size.x, info.paddle.rPaddle_size.y, info.paddle.rPaddle_size.z);
-	vehicle->getChassisWorldTransform().getOpenGLMatrix(&rPaddle.transform);
+	info.rPaddle = new Cube(info.paddle.rPaddle_size.x, info.paddle.rPaddle_size.y, info.paddle.rPaddle_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&info.rPaddle->transform);
 	Cube lPaddle(info.paddle.lPaddle_size.x, info.paddle.lPaddle_size.y, info.paddle.lPaddle_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&lPaddle.transform);
 
@@ -82,17 +82,17 @@ void PhysVehicle3D::Render()
 	cabin.transform.M[13] += offset_Cabin.getY();
 	cabin.transform.M[14] += offset_Cabin.getZ();
 
-	rPivot.transform.M[12] += offset_rPivot.getX();
-	rPivot.transform.M[13] += offset_rPivot.getY();
-	rPivot.transform.M[14] += offset_rPivot.getZ();
+	info.rPivot->transform.M[12] += offset_rPivot.getX();
+	info.rPivot->transform.M[13] += offset_rPivot.getY();
+	info.rPivot->transform.M[14] += offset_rPivot.getZ();
 
 	lPivot.transform.M[12] += offset_lPivot.getX();
 	lPivot.transform.M[13] += offset_lPivot.getY();
 	lPivot.transform.M[14] += offset_lPivot.getZ();
 
-	rPaddle.transform.M[12] += offset_rPaddle.getX();
-	rPaddle.transform.M[13] += offset_rPaddle.getY();
-	rPaddle.transform.M[14] += offset_rPaddle.getZ();
+	info.rPaddle->transform.M[12] += offset_rPaddle.getX();
+	info.rPaddle->transform.M[13] += offset_rPaddle.getY();
+	info.rPaddle->transform.M[14] += offset_rPaddle.getZ();
 
 	lPaddle.transform.M[12] += offset_lPaddle.getX();
 	lPaddle.transform.M[13] += offset_lPaddle.getY();
@@ -104,15 +104,15 @@ void PhysVehicle3D::Render()
 
 	chassis.color.Set(0.355f, 0.315f, 0.110f);
 	cabin.color.Set(0.355f, 0.315f, 0.110f);
-	rPivot.color.Set(0.10f, 0.10f, 0.11f);
+	info.rPivot->color.Set(0.10f, 0.10f, 0.11f);
 	lPivot.color.Set(0.10f, 0.10f, 0.11f);
-	rPaddle.color.Set(0.10f, 0.10f, 0.11f);
+	info.rPaddle->color.Set(0.10f, 0.10f, 0.11f);
 	lPaddle.color.Set(0.10f, 0.10f, 0.11f);
 
 
-	rPaddle.Render();
+	info.rPaddle->Render();
 	lPaddle.Render();
-	rPivot.Render();
+	info.rPivot->Render();
 	lPivot.Render();
 	chassis.Render();
 	cabin.Render();

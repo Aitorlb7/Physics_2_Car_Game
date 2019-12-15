@@ -51,7 +51,7 @@ struct Paddle
 struct VehicleInfo
 {
 	~VehicleInfo();
-	
+public:
 	vec3 chassis_size;
 	vec3 chassis_offset;
 	vec3 cabin_size;
@@ -67,6 +67,10 @@ struct VehicleInfo
 
 	Pivot pivot;
 	Paddle paddle;
+
+	Cube* rPivot;
+	Cube* rPaddle;
+
 	Wheel* wheels;
 	int num_wheels;
 };
