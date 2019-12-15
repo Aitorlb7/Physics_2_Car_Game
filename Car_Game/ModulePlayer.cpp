@@ -170,6 +170,11 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT)
+	{
+		vehicle->SetPos(0, 0, 0);
+		brake = BRAKE_POWER;
+	}
 
 
 	if (can_sprint == true)

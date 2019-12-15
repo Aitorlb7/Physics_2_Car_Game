@@ -51,7 +51,7 @@ public:
 
 	Cube* walls[8];
 	Cube* Floor;
-	Cube* sensor_end;
+	Cube* Aux;
 
 	Cube* rightGate;
 	Cube* leftGate;
