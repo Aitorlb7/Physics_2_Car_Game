@@ -56,6 +56,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.Render();
 	rightGate->Render();
 	leftGate->Render();
+	Floor->Render();
 	return UPDATE_CONTINUE;
 }
 
@@ -65,10 +66,21 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 void ModuleSceneIntro::Create_walls()
 {
+	// Create floor
+	Floor = new Cube(500, 0.1f, 500);
+	Floor->color = Blue;
+
 	//Creating walls
 	for (int i = 0; i < 5; i++)
-	{
-		walls[i] = new Cube(70, 30, 2);
+	{		
+		if ((i == 3) || (i == 4))
+		{
+			walls[i] = new Cube(35, 30, 2);
+		}
+		else
+		{
+			walls[i] = new Cube(100, 30, 2);
+		}
 		walls[i]->color = Blue;
 	}
 
@@ -76,10 +88,10 @@ void ModuleSceneIntro::Create_walls()
 	walls[1]->SetRotation(90, vec3(0, 1, 0));
 	walls[2]->SetRotation(90, vec3(0, 1, 0));
 	walls[0]->SetPos(0, 15, -20);
-	walls[1]->SetPos(36, 15, 15);
-	walls[2]->SetPos(-36, 15, 15);
-	walls[3]->SetPos(50, 15, 50);
-	walls[4]->SetPos(-50, 15, 50);
+	walls[1]->SetPos(50, 15, 30);
+	walls[2]->SetPos(-50, 15, 30);
+	walls[3]->SetPos(32, 15, 80);
+	walls[4]->SetPos(-32, 15, 80);
 
 	//Give physics to walls
 	for (int i = 0; i < 5; i++)
@@ -91,7 +103,7 @@ void ModuleSceneIntro::Create_Door()
 {
 	//---------------Right Gate-----------------
 	rightGate = new Cube(14.f, 30.f, 2.f);
-	rightGate->SetPos(-7.0f, 15.f, 50.f);
+	rightGate->SetPos(-7.0f, 15.f, 80.0f);
 	rightGate->color = Red;
 
 	rightGate_body = App->physics->AddBody(*rightGate, 10.f);
@@ -105,7 +117,7 @@ void ModuleSceneIntro::Create_Door()
 
 	//---------------Left Gate-----------------
 	leftGate = new Cube(14.f, 30.f, 2.f);
-	leftGate->SetPos(7.0f, 15.f, 50.f);
+	leftGate->SetPos(7.0f, 15.f, 80.0f);
 	leftGate->color = Red;
 
 	leftGate_body = App->physics->AddBody(*leftGate, 10.f);
