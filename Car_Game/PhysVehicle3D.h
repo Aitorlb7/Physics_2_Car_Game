@@ -68,8 +68,8 @@ public:
 	Pivot pivot;
 	Paddle paddle;
 
-	Cube* rPivot;
-	Cube* rPaddle;
+	Cube rPivot;
+	Cube rPaddle;
 
 	Wheel* wheels;
 	int num_wheels;

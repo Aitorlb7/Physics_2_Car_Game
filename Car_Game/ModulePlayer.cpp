@@ -191,10 +191,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		vehicle->Elevate_paddle(-2.0f);
 	}
-// Doesn't work------------------
-	vehicle->info.paddle.right_paddle->GetTransform(&vehicle->info.rPaddle->transform);
-	vehicle->info.pivot.right_pivot->GetTransform(&vehicle->info.rPivot->transform);
-//--------------------------------
+
 
 	PowerUpSystem();
 	vehicle->ApplyEngineForce(acceleration);
