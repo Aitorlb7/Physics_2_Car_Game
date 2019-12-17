@@ -330,11 +330,13 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle( VehicleInfo& info)
 	// ------------Slider Constraint--------------> Finally it doesn't attach to the car so we left it outside the circuit.
 	info.rPivot.size.Set(info.pivot.rPivot_size.x, info.pivot.rPivot_size.y, info.pivot.rPivot_size.z);
 	info.rPivot.SetPos(info.chassis_offset.x + info.pivot.rPivot_offset.x, info.chassis_offset.y + info.pivot.rPivot_offset.y, info.chassis_offset.z + info.pivot.rPivot_offset.z);
-	info.pivot.right_pivot = AddBody(info.rPivot,MASS);
+	info.pivot.right_pivot = AddBody(info.rPivot,100.0f);
+	info.pivot.right_pivot->body->setGravity(btVector3{ 0,0,0 });
 
 	info.rPaddle.size.Set(info.paddle.rPaddle_size.x, info.paddle.rPaddle_size.y, info.paddle.rPaddle_size.z);
 	info.rPaddle.SetPos(info.chassis_offset.x + info.paddle.rPaddle_offset.x, info.chassis_offset.y + info.paddle.rPaddle_offset.y, info.chassis_offset.z + info.paddle.rPaddle_offset.z);
 	info.paddle.right_paddle = AddBody(info.rPaddle,10.0f);
+	info.paddle.right_paddle->body->setGravity(btVector3{ 0,0,0 });
 	info.paddle.right_paddle->body->setActivationState(DISABLE_DEACTIVATION);
 
 

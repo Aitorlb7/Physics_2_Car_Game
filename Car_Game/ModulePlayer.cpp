@@ -34,7 +34,7 @@ bool ModulePlayer::Start()
 	car.pivot.lPivot_size.Set(0.3f, 4, 0.15f);
 	car.pivot.lPivot_offset.Set(0.5f, 2.2f, 1.83f);
 	car.paddle.rPaddle_size.Set(0.3f, 0.15f, 1.8f);
-	car.paddle.rPaddle_offset.Set(-0.5f,0.25f,2.65f);
+	car.paddle.rPaddle_offset.Set(-0.5f,0.25f,2.95f);
 	car.paddle.lPaddle_size.Set(0.3f, 0.15f, 1.8f);
 	car.paddle.lPaddle_offset.Set(0.5f, 0.25f, 2.65f);
 
