@@ -109,8 +109,14 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+
 // ---------------------------------------------------------
 update_status ModulePhysics3D::Update(float dt)
+{
+	return UPDATE_CONTINUE;
+}
+// ---------------------------------------------------------
+update_status ModulePhysics3D::PostUpdate(float dt)
 {
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
@@ -139,11 +145,7 @@ update_status ModulePhysics3D::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-// ---------------------------------------------------------
-update_status ModulePhysics3D::PostUpdate(float dt)
-{
-	return UPDATE_CONTINUE;
-}
+
 
 // Called before quitting
 bool ModulePhysics3D::CleanUp()
@@ -329,7 +331,7 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle( VehicleInfo& info)
 
 	// ------------Slider Constraint--------------> Finally it doesn't attach to the car so we left it outside the circuit.
 	info.rPivot.size.Set(info.pivot.rPivot_size.x, info.pivot.rPivot_size.y, info.pivot.rPivot_size.z);
-	info.rPivot.SetPos(info.chassis_offset.x + info.pivot.rPivot_offset.x, info.chassis_offset.y + info.pivot.rPivot_offset.y, info.chassis_offset.z + info.pivot.rPivot_offset.z);
+	info.rPivot.SetPos(info.chassis_offset.x , info.chassis_offset.y , info.chassis_offset.z );
 	info.pivot.right_pivot = AddBody(info.rPivot,100.0f);
 	info.pivot.right_pivot->body->setGravity(btVector3{ 0,0,0 });
 

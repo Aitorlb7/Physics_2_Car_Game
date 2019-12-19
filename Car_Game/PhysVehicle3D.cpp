@@ -48,7 +48,6 @@ void PhysVehicle3D::Render()
 
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(matrix);
 
-
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 
 	btVector3 offset_Chassis(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
@@ -57,13 +56,13 @@ void PhysVehicle3D::Render()
 	offset_Cabin = offset_Cabin.rotate(q.getAxis(), q.getAngle());
 
 	btVector3 offset_right_pivot(info.chassis_offset.x + info.pivot.rPivot_offset.x, info.chassis_offset.y
-		+ info.pivot.rPivot_offset.y, info.chassis_offset.z + info.pivot.rPivot_offset.z);
+		+ 1.5f, info.chassis_offset.z + info.pivot.rPivot_offset.z + 0.1f);
 	offset_right_pivot = offset_right_pivot.rotate(q.getAxis(), q.getAngle());
 	//btVector3 offset_lPivot(info.pivot.lPivot_offset.x, info.pivot.lPivot_offset.y, info.pivot.lPivot_offset.z);
 	//offset_lPivot = offset_lPivot.rotate(q.getAxis(), q.getAngle());
 
-	btVector3 offset_right_paddle(info.chassis_offset.x + info.paddle.rPaddle_offset.x, info.chassis_offset.y
-		+ info.paddle.rPaddle_offset.y, info.chassis_offset.z + info.paddle.rPaddle_offset.z);
+	btVector3 offset_right_paddle(info.chassis_offset.x , info.chassis_offset.y - 3.8f
+		, info.chassis_offset.z + 1.0f );
 	offset_right_paddle = offset_right_paddle.rotate(q.getAxis(), q.getAngle());
 	//btVector3 offset_lPaddle(info.paddle.lPaddle_offset.x, info.paddle.lPaddle_offset.y, info.paddle.lPaddle_offset.z);
 	//offset_lPaddle = offset_lPaddle.rotate(q.getAxis(), q.getAngle());
@@ -88,9 +87,9 @@ void PhysVehicle3D::Render()
 	
 	info.paddle.right_paddle->SetTransform(matrix);
 
+	
 	info.paddle.right_paddle->GetTransform(&info.rPaddle.transform);
 	info.pivot.right_pivot->GetTransform(&info.rPivot.transform);
-
 
 
 	chassis.color.Set(0.355f, 0.315f, 0.110f);
@@ -108,6 +107,7 @@ void PhysVehicle3D::Render()
 	//lPivot.Render();
 	chassis.Render();
 	cabin.Render();
+
 }
 
 // ----------------------------------------------------------------------------

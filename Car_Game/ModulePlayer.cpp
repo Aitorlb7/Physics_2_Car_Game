@@ -189,7 +189,7 @@ update_status ModulePlayer::Update(float dt)
 //To show the slider constraint works but it's not implemented in the car
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 	{
-		vehicle->Elevate_paddle(-2.0f);
+		vehicle->Elevate_paddle(-4.0f);
 	}
 
 
