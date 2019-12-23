@@ -21,7 +21,7 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
+	App->audio->PlayMusic("music/MK8_RB.wav");
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
@@ -84,7 +84,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body1->type == End) {
+	if (body2->type == End) 
+	{
 		right_hinge->enableAngularMotor(true, -1.0f, 100.0f);
 		left_hinge->enableAngularMotor(true, 1.0f, 100.0f);
 	}
@@ -135,7 +136,7 @@ void ModuleSceneIntro::Create_walls()
 	//Give physics to walls
 	for (int i = 0; i < 8; i++)
 	{
-		App->physics->AddBody(*walls[i], MASS);
+		App->physics->AddBody(*walls[i], MASS * 100);
 	}
 }
 void ModuleSceneIntro::Create_Door()
@@ -171,6 +172,7 @@ void ModuleSceneIntro::Create_Door()
 
 void ModuleSceneIntro::Create_Obstacles()
 {
+
 	//Create obstacles
 	for (int i = 0; i < 6; i++)
 	{
@@ -186,6 +188,13 @@ void ModuleSceneIntro::Create_Obstacles()
 	obstacle[3]->SetPos(-20, 2, 70);
 	obstacle[4]->SetPos(5, 2, 75);
 	obstacle[5]->SetPos(25, 2, 80);
+
+	//Physic
+
+	for (int i = 0; i < 6; i++)
+	{
+		App->physics->AddBody(*obstacle[i], MASS * 100);
+	}
 
 }
 

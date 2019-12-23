@@ -22,6 +22,7 @@ public:
 	void PowerUpSystem();
 
 public:
+	Timer Chrono;
 
 	PhysVehicle3D* vehicle;
 

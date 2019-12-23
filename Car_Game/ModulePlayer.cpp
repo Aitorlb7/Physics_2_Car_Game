@@ -23,6 +23,7 @@ bool ModulePlayer::Start()
 
 	VehicleInfo car;
 
+	Chrono.Start();
 
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(2, 1.5f, 3.5f);
@@ -174,6 +175,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		vehicle->SetPos(0, 0, 0);
 		brake = BRAKE_POWER;
+		Chrono.Reset();
 	}
 
 
@@ -184,6 +186,13 @@ update_status ModulePlayer::Update(float dt)
 			sprinting = true;
 			sprint_timer.Start();
 		}
+	}
+
+	if (vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() == 180)
+	{
+		Chrono.Stop();
+		//vehicle->SetPos(0, 0, 0);
+		//brake = BRAKE_POWER;
 	}
 
 //To show the slider constraint works but it's not implemented in the car
@@ -201,7 +210,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
+	sprintf_s(title, "%.1f Km/h           %.1f Seconds", vehicle->GetKmh(), Chrono.ReadSec());
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
