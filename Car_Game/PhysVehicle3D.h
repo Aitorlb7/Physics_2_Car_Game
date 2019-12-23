@@ -25,8 +25,8 @@ struct Wheel
 
 struct Pivot
 {
-	PhysBody3D* right_pivot = nullptr;
-	PhysBody3D* left_pivot = nullptr;
+	PhysBody3D* right_pivot;
+	PhysBody3D* left_pivot;
 
 	vec3 rPivot_size;
 	vec3 rPivot_offset;
@@ -36,8 +36,8 @@ struct Pivot
 
 struct Paddle
 {
-	PhysBody3D* right_paddle = nullptr;
-	PhysBody3D* left_paddle = nullptr;
+	PhysBody3D* right_paddle;
+	PhysBody3D* left_paddle;
 
 	vec3 rPaddle_size;
 	vec3 rPaddle_offset;
@@ -68,8 +68,8 @@ public:
 	Pivot pivot;
 	Paddle paddle;
 
-	Cube* rPivot;
-	Cube* rPaddle;
+	Cube rPivot;
+	Cube rPaddle;
 
 	Wheel* wheels;
 	int num_wheels;
@@ -90,6 +90,7 @@ public:
 	void Elevate_paddle(float velocity);
 public:
 
+	float matrix[16];
 	VehicleInfo info;
 	btRaycastVehicle* vehicle;
 };

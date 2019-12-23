@@ -109,8 +109,14 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+
 // ---------------------------------------------------------
 update_status ModulePhysics3D::Update(float dt)
+{
+	return UPDATE_CONTINUE;
+}
+// ---------------------------------------------------------
+update_status ModulePhysics3D::PostUpdate(float dt)
 {
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		debug = !debug;
@@ -139,11 +145,7 @@ update_status ModulePhysics3D::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-// ---------------------------------------------------------
-update_status ModulePhysics3D::PostUpdate(float dt)
-{
-	return UPDATE_CONTINUE;
-}
+
 
 // Called before quitting
 bool ModulePhysics3D::CleanUp()
@@ -322,18 +324,20 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle( VehicleInfo& info)
 
 		vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
 	}
+
+
+
+
 	// ------------Slider Constraint--------------> Finally it doesn't attach to the car so we left it outside the circuit.
+	info.rPivot.size.Set(info.pivot.rPivot_size.x, info.pivot.rPivot_size.y, info.pivot.rPivot_size.z);
+	info.rPivot.SetPos(info.chassis_offset.x , info.chassis_offset.y , info.chassis_offset.z );
+	info.pivot.right_pivot = AddBody(info.rPivot,100.0f);
+	info.pivot.right_pivot->body->setGravity(btVector3{ 0,0,0 });
 
-
-	Cube pivot(info.pivot.rPivot_size.x, info.pivot.rPivot_size.y, info.pivot.rPivot_size.z);
-	//pivot.SetPos(info.chassis_offset.x + info.pivot.rPivot_offset.x, info.chassis_offset.y + info.pivot.rPivot_offset.y, info.chassis_offset.z + info.pivot.rPivot_offset.z);
-	pivot.SetPos(70, 0, 0);
-	info.pivot.right_pivot = AddBody(pivot,MASS);
-
-	Cube paddle(info.paddle.rPaddle_size.x, info.paddle.rPaddle_size.y, info.paddle.rPaddle_size.z);
-	//paddle.SetPos(info.chassis_offset.x + info.paddle.rPaddle_offset.x, info.chassis_offset.y + info.paddle.rPaddle_offset.y, info.chassis_offset.z + info.paddle.rPaddle_offset.z);
-	paddle.SetPos(70, 0, 4);
-	info.paddle.right_paddle = AddBody(paddle,10.0f);
+	info.rPaddle.size.Set(info.paddle.rPaddle_size.x, info.paddle.rPaddle_size.y, info.paddle.rPaddle_size.z);
+	info.rPaddle.SetPos(info.chassis_offset.x + info.paddle.rPaddle_offset.x, info.chassis_offset.y + info.paddle.rPaddle_offset.y, info.chassis_offset.z + info.paddle.rPaddle_offset.z);
+	info.paddle.right_paddle = AddBody(info.rPaddle,10.0f);
+	info.paddle.right_paddle->body->setGravity(btVector3{ 0,0,0 });
 	info.paddle.right_paddle->body->setActivationState(DISABLE_DEACTIVATION);
 
 
