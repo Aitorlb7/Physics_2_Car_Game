@@ -15,7 +15,7 @@
 - S: Accelerate backward
 - A/D: Left/Right
 - F: Hand brake
-- SPACE: Dash (Only if you get the power-up)
+- SPACE: Dash 
 - Right mouse button: To move the camera sliding the mouse.
 
 
@@ -29,7 +29,7 @@
 ### Objective and how to pass it
 
 The objective is go through the doors that are on the end of the scenario. 
-To do it, you need to avoid some obstacles and finally obtain a power-up to dash and cross the doors.
+To do it, you need to avoid some obstacles and reach the doors.
 
 **REPOSITORY:**
 https://github.com/Aitorlb7/Physics_2_Car_Game
