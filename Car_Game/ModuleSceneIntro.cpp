@@ -92,9 +92,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body1->type == Win) {
 		App->player->vehicle->vehicleWin = true;
 		App->player->winornot = 1;
-		App->player->vehicle->SetPos(0, 0, 0);
 		App->player->Chrono.Stop();
-		App->player->brake = BRAKE_POWER;
 	}
 
 	if (body1->type == Obstacle) {
