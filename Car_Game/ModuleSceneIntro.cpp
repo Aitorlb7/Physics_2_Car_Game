@@ -84,13 +84,24 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body2->type == End) 
+	if (body1->type == End) 
 	{
 		right_hinge->enableAngularMotor(true, -1.0f, 100.0f);
 		left_hinge->enableAngularMotor(true, 1.0f, 100.0f);
 	}
 	if (body1->type == Win) {
 		App->player->vehicle->vehicleWin = true;
+		App->player->winornot = 1;
+		App->player->vehicle->SetPos(0, 0, 0);
+		App->player->Chrono.Stop();
+		App->player->brake = BRAKE_POWER;
+	}
+
+	if (body1->type == Obstacle) {
+		App->player->winornot = 2;
+		App->player->vehicle->SetPos(0, 0, 0);
+		App->player->Chrono.Start();
+		App->player->brake = BRAKE_POWER;
 	}
 }
 
@@ -192,7 +203,10 @@ void ModuleSceneIntro::Create_Obstacles()
 
 	for (int i = 0; i < 6; i++)
 	{
-		App->physics->AddBody(*obstacle[i], MASS * 100);
+		//App->physics->AddBody(*obstacle[i], MASS * 100);
+		PhysBody3D* body = App->physics->AddBody(*obstacle[i], 0, Obstacle);
+		body->CreateSensor();
+		body->collision_listeners.add(this);
 	}
 
 }

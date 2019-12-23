@@ -175,7 +175,8 @@ update_status ModulePlayer::Update(float dt)
 	{
 		vehicle->SetPos(0, 0, 0);
 		brake = BRAKE_POWER;
-		Chrono.Reset();
+		winornot = 0;
+		Chrono.Start();
 	}
 
 
@@ -186,13 +187,6 @@ update_status ModulePlayer::Update(float dt)
 			sprinting = true;
 			sprint_timer.Start();
 		}
-	}
-
-	if (vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() == 180)
-	{
-		Chrono.Stop();
-		//vehicle->SetPos(0, 0, 0);
-		//brake = BRAKE_POWER;
 	}
 
 //To show the slider constraint works but it's not implemented in the car
@@ -210,7 +204,20 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	char title[80];
-	sprintf_s(title, "%.1f Km/h           %.1f Seconds", vehicle->GetKmh(), Chrono.ReadSec());
+	if (winornot == 1)
+	{
+		sprintf_s(title, "%.1f Km/h           %.1f Seconds      YOU WIN!!!!!", vehicle->GetKmh(), Chrono.ReadSec());
+	}	
+	
+	if (winornot == 2)
+	{
+		sprintf_s(title, "%.1f Km/h           %.1f Seconds      LOOOOOSEEEER!!!!!", vehicle->GetKmh(), Chrono.ReadSec());
+	}	
+	
+	if (winornot == 0)
+	{
+		sprintf_s(title, "%.1f Km/h           %.1f Seconds", vehicle->GetKmh(), Chrono.ReadSec());
+	}
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;

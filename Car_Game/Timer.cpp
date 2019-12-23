@@ -27,8 +27,8 @@ void Timer::Reset()
 // ---------------------------------------------
 void Timer::Stop()
 {
-	stopped_at = SDL_GetTicks();
 	running = false;
+	stopped_at = SDL_GetTicks();
 }
 
 // ---------------------------------------------

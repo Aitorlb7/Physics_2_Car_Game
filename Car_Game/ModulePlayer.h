@@ -33,4 +33,6 @@ public:
 	bool sprinting = false;
 	bool can_sprint = true;
 	Timer sprint_timer;
+
+	int winornot = 0;
 };
