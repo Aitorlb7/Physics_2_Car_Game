@@ -177,6 +177,11 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 		winornot = 0;
 		Chrono.Start();
+		vehicle->vehicleWin = false;
+		App->scene_intro->right_hinge->enableAngularMotor(false, 0, 0);
+		App->scene_intro->left_hinge->enableAngularMotor(false, 0, 0);
+		App->scene_intro->rightGate_body->SetPos(-7.0f, 15.f, 180.0f);
+		App->scene_intro->leftGate_body->SetPos(7.0f, 15.f, 180.0f);
 	}
 
 

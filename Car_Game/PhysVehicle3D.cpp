@@ -112,8 +112,7 @@ void PhysVehicle3D::Render()
 	info.pivot.left_pivot->GetTransform(&info.lPivot.transform);
 
 	//Set car color
-	chassis.color.Set(0.355f, 0.315f, 0.110f);
-	cabin.color.Set(0.355f, 0.315f, 0.110f);
+	
 	info.rPivot.color.Set(0.10f, 0.10f, 0.11f);
 	info.rPaddle.color.Set(0.10f, 0.10f, 0.11f);
 	info.lPivot.color.Set(0.10f, 0.10f, 0.11f);
@@ -123,6 +122,11 @@ void PhysVehicle3D::Render()
 	{
 		chassis.color.Set(0.207f, 0.850f, 0.400f);
 		cabin.color.Set(0.207f, 0.850f, 0.400f);
+	}
+	else
+	{
+		chassis.color.Set(0.355f, 0.315f, 0.110f);
+		cabin.color.Set(0.355f, 0.315f, 0.110f);
 	}
 
 	//Render the car
