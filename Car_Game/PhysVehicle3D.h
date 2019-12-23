@@ -20,7 +20,8 @@ struct Wheel
 	bool front; // is front wheel ?
 	bool drive; // does this wheel received engine power ?
 	bool brake; // does breakes affect this wheel ?
-	bool steering; // does this wheel turns ?
+	bool steering;// does this wheel turns ?
+
 };
 
 struct Pivot
@@ -65,11 +66,14 @@ public:
 	float frictionSlip; // defaults to 10.5 / friction with the ground. 0.8 should be good but high values feels better (kart 1000.0)
 	float maxSuspensionForce; // defaults to 6000 / max force to the chassis
 
+
 	Pivot pivot;
 	Paddle paddle;
 
 	Cube rPivot;
 	Cube rPaddle;
+	Cube lPivot;
+	Cube lPaddle;
 
 	Wheel* wheels;
 	int num_wheels;
@@ -91,6 +95,7 @@ public:
 public:
 
 	float matrix[16];
+	bool vehicleWin;
 	VehicleInfo info;
 	btRaycastVehicle* vehicle;
 };

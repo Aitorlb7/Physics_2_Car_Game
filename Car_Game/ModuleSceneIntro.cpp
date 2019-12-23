@@ -90,8 +90,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		left_hinge->enableAngularMotor(true, 1.0f, 100.0f);
 	}
 	if (body1->type == Win) {
-		App->player->vehicle->SetPos(0, 0, 0);
-		App->player->brake = BRAKE_POWER;
+		App->player->vehicle->vehicleWin = true;
 	}
 }
 

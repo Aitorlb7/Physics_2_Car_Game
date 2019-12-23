@@ -340,6 +340,16 @@ PhysVehicle3D* ModulePhysics3D::AddVehicle( VehicleInfo& info)
 	info.paddle.right_paddle->body->setGravity(btVector3{ 0,0,0 });
 	info.paddle.right_paddle->body->setActivationState(DISABLE_DEACTIVATION);
 
+	info.lPivot.size.Set(info.pivot.lPivot_size.x, info.pivot.lPivot_size.y, info.pivot.lPivot_size.z);
+	info.lPivot.SetPos(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
+	info.pivot.left_pivot = AddBody(info.lPivot, 100.0f);
+	info.pivot.left_pivot->body->setGravity(btVector3{ 0,0,0 });
+
+	info.lPaddle.size.Set(info.paddle.lPaddle_size.x, info.paddle.lPaddle_size.y, info.paddle.lPaddle_size.z);
+	info.lPaddle.SetPos(info.chassis_offset.x + info.paddle.lPaddle_offset.x, info.chassis_offset.y + info.paddle.lPaddle_offset.y, info.chassis_offset.z + info.paddle.lPaddle_offset.z);
+	info.paddle.left_paddle = AddBody(info.lPaddle, 10.0f);
+	info.paddle.left_paddle->body->setGravity(btVector3{ 0,0,0 });
+	info.paddle.left_paddle->body->setActivationState(DISABLE_DEACTIVATION);
 
 	btTransform localA;
 	btTransform localB;
