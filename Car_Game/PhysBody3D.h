@@ -10,6 +10,7 @@ enum SensorType
 {
 	None = 0,
 	End,
+	Win,
 	Obstacle,
 };
 

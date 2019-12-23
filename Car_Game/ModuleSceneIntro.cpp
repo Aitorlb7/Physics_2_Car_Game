@@ -4,6 +4,8 @@
 #include "Primitive.h"
 #include "PhysBody3D.h"
 #include "ModulePhysics3D.h"
+#include "ModulePlayer.h"
+#include "PhysVehicle3D.h"
 
 #include "Bullet/include/btBulletCollisionCommon.h"
 
@@ -22,6 +24,11 @@ bool ModuleSceneIntro::Start()
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
+
+
+
+
+
 
 	Create_Sensors();
 	Create_walls();
@@ -80,6 +87,10 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body1->type == End) {
 		right_hinge->enableAngularMotor(true, -1.0f, 100.0f);
 		left_hinge->enableAngularMotor(true, 1.0f, 100.0f);
+	}
+	if (body1->type == Win) {
+		App->player->vehicle->SetPos(0, 0, 0);
+		App->player->brake = BRAKE_POWER;
 	}
 }
 
@@ -181,15 +192,18 @@ void ModuleSceneIntro::Create_Obstacles()
 void ModuleSceneIntro::Create_Sensors()
 {
 	// End sensor------------------
-	Aux = new Cube(40.f, 0.1f, 5.f);
-	Aux->SetPos(0, 0.1f, 170.f);
-	Aux->color = Red;
+	Cube sensor_win(80.f, 0.1f, 5.f);
+	sensor_win.SetPos(0, 1.6f, 200.f);
+	PhysBody3D* auxbody2 = App->physics->AddBody(sensor_win, 0, Win);
+	auxbody2->CreateSensor();
+	auxbody2->collision_listeners.add(this);
 	
-	
-	Cube sensor_end = *Aux;
-	sensor_end.SetPos(0,1.6f, 170.f);
+	Cube sensor_end (80.f, 0.1f, 5.f);
+	sensor_end.SetPos(0,1.6f, 150.f);
 	PhysBody3D* auxbody = App->physics->AddBody(sensor_end, 0,End);
 	auxbody->CreateSensor();
 	auxbody->collision_listeners.add(this);
+
+
 }
 

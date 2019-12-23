@@ -52,6 +52,7 @@ public:
 	Cube* walls[8];
 	Cube* Floor;
 	Cube* Aux;
+	Cube* Aux2;
 
 	Cube* rightGate;
 	Cube* leftGate;
